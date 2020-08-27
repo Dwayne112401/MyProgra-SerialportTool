@@ -1,0 +1,12 @@
+C:\Users\97460\source\repos\MVVMDemo\mvvm\bin\Debug\mvvm.dll
+C:\Users\97460\source\repos\MVVMDemo\mvvm\bin\Debug\mvvm.pdb
+C:\Users\97460\source\repos\MVVMDemo\mvvm\obj\Debug\mvvm.csproj.CoreCompileInputs.cache
+C:\Users\97460\source\repos\MVVMDemo\mvvm\obj\Debug\mvvm.dll
+C:\Users\97460\source\repos\MVVMDemo\mvvm\obj\Debug\mvvm.pdb
+D:\@dwayne\@MyProcess\串口助手\SerialportTool\SerialportTool\mvvm\bin\Debug\mvvm.dll
+D:\@dwayne\@MyProcess\串口助手\SerialportTool\SerialportTool\mvvm\bin\Debug\mvvm.pdb
+D:\@dwayne\@MyProcess\串口助手\SerialportTool\SerialportTool\mvvm\obj\Debug\mvvm.csproj.CoreCompileInputs.cache
+D:\@dwayne\@MyProcess\串口助手\SerialportTool\SerialportTool\mvvm\obj\Debug\mvvm.dll
+D:\@dwayne\@MyProcess\串口助手\SerialportTool\SerialportTool\mvvm\obj\Debug\mvvm.pdb
+D:\@dwayne\@MyProcess\串口助手\SerialportTool\SerialportTool\mvvm\bin\Debug\System.Windows.Interactivity.dll
+D:\@dwayne\@MyProcess\串口助手\SerialportTool\SerialportTool\mvvm\obj\Debug\mvvm.csproj.CopyComplete

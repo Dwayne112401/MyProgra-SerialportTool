@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="spt.ui.share.PropWindow.MessageWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:event="clr-namespace:spt.mvvm.Command;assembly=spt.mvvm"
+             xmlns:vm="clr-namespace:spt.ui.share.PropWindow"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance vm:PropWindowVM}"
+             d:DesignHeight="1000" d:DesignWidth="2000">
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="#dfdfdf" Opacity="0.7"/>
+        </Grid.Background>
+        <Grid Height="200" Width="300" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0"  Background="#20B2AA">
+                <TextBlock Margin="5" Text="{Binding Path=MessageTitle}" Foreground="DarkBlue" Background="#20B2AA" TextAlignment="Center" VerticalAlignment="Center" FontSize="28"/>
+            </Grid>
+            <TextBlock Grid.Row="1"  Text="{Binding Path=MessageText}" TextWrapping="Wrap" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+                <Button  Grid.Column="1" Content="{Binding Path=ButtonOkText}" FontSize="22">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <event:EventCommand Command="{Binding Path=CloseCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button  Grid.Column="3" Content="{Binding Path=ButtonCancelText}" FontSize="22">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <event:EventCommand Command="{Binding Path=CloseCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

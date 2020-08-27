@@ -1,0 +1,187 @@
+﻿<Application x:Class="SerialportTool.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SerialportTool"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="{TemplateBinding Control.BorderBrush}"  CornerRadius="3" Name="PART_Background">
+                            <Border.Background>
+                                <SolidColorBrush Color="#20B2AA"/>
+                            </Border.Background>
+                            <ContentPresenter Content="{TemplateBinding ContentControl.Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <Rectangle RadiusX="3" RadiusY="3" Fill="{TemplateBinding Background}" Stroke="#7e94a9"/>
+                            <ScrollViewer x:Name="PART_ContentHost" HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden" Padding="{TemplateBinding Padding}" Focusable="false">
+                            </ScrollViewer>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+
+        <Style  x:Key="ComboxStyleBtn" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border x:Name="Back" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" CornerRadius="0 6 6 0" >
+                            <Path Name="PathFill" Fill="White" HorizontalAlignment="Right" Margin="0 0 15 0"
+                              Width="13" Height="11" StrokeThickness="0" Data="M5,0 L10,10 L0,10 z" RenderTransformOrigin="0.5,0.5" Stretch="Fill">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="180"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="PathFill" Property="Fill" Value="#999999"></Setter>
+                                <Setter TargetName="Back" Property="Background" Value="Transparent"></Setter>
+                                <Setter TargetName="Back" Property="BorderBrush" Value="#59CA4F"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Combox-->
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="#293f5f"/>
+            <Setter Property="IsEditable"  Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <!--ComBoxItem-->
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="MinHeight" Value="22"></Setter>
+                        <Setter Property="MinWidth" Value="60"></Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ComboBoxItem">
+                                    <Border Name="Back" Background="Gray"  BorderThickness="0,0,0,0" BorderBrush="#81D779" >
+                                        <ContentPresenter ContentSource="{Binding Source}"  VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"></ContentPresenter>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Back" Property="Background" Value="LightGray"></Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsHighlighted" Value="True">
+                                            <Setter TargetName="Back" Property="Background" Value="LightGray"></Setter>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="0.3*" MaxWidth="30"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox  Grid.Column="0" IsReadOnly="{TemplateBinding IsReadOnly}" Padding="10 0 0 0" 
+                                  Background="Transparent"
+                                  Text="{TemplateBinding Text}"
+                                  Foreground="{TemplateBinding Foreground}"
+                                  VerticalContentAlignment="Center" BorderThickness="0"/>
+                            <Border  Grid.Column="0" BorderThickness="0,0,0,0"
+                                 Background="{TemplateBinding Background}"
+                                 BorderBrush="White"
+                                 CornerRadius="6,0,0,6">
+
+                            </Border>
+                            <Border Grid.Column="0" BorderThickness="1,1,1,1"  Grid.ColumnSpan="2"
+                                BorderBrush="White"
+                                CornerRadius="6,6,6,6">
+                                <ToggleButton Style="{StaticResource ComboxStyleBtn}" 
+                                          IsChecked="{Binding Path=IsDropDownOpen, 
+                                       
+                                Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          ClickMode="Press"/>
+                            </Border>
+                            <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" x:Name="Popup" Focusable="False" AllowsTransparency="True" PopupAnimation="Slide">
+                                <Border CornerRadius="1" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{TemplateBinding ActualWidth}" x:Name="DropDown" SnapsToDevicePixels="True">
+                                    <Border.Effect>
+                                        <DropShadowEffect Color="Black" BlurRadius="2" ShadowDepth="0" Opacity="0.5"/>
+                                    </Border.Effect>
+                                    <ScrollViewer Margin="4,6,4,6" Style="{DynamicResource ScrollViewerStyle}" MaxHeight="{TemplateBinding MaxDropDownHeight}" SnapsToDevicePixels="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
+
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" Background="White"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="False" />
+            <Setter Property="FocusVisualStyle" Value="{DynamicResource CheckBoxFocusVisual}" />
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="IsChecked" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Height="{TemplateBinding Height}" Width="{TemplateBinding Height}">
+                                <Rectangle x:Name="CheckBoxRectangle" Fill="White" Opacity="0.3" RadiusY="5" RadiusX="5"/>
+                                <Rectangle x:Name="CheckBoxRectangleOut" Stroke="#FFABADB3" StrokeThickness="1" RadiusY="5" RadiusX="5"/>
+                                <Grid x:Name="CheckedMark" Height="{TemplateBinding Height}" Width="{TemplateBinding Height}" Visibility="Collapsed" >
+                                    <Viewbox>
+                                        <Grid>
+                                            <Path SnapsToDevicePixels="True" StrokeThickness="3" Data="M1,9 L10,17" Stroke="#3553ad"/>
+                                            <Path SnapsToDevicePixels="True" StrokeThickness="3" Data="M8,17 L20,4" Stroke="#3553ad"/>
+                                        </Grid>
+                                    </Viewbox>
+                                </Grid>
+                            </Grid>
+                            <ContentPresenter Grid.Column="1" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckedMark" Property="Visibility" Value="Visible"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>

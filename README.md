@@ -1,2 +1,56 @@
-# MyProgra-SerialportTool
-ä¸²å£å·¥å…·ï¼Œèƒ½å¤Ÿæ‰“å¼€/å…³é—­ä¸²å£ï¼Œå¹¶å‘é€/æŽ¥å—ä¸²å£æ•°æ®
+
+# Explanation
+|Ãû´Ê|½âÊÍ|
+|-|-|
+|vm|ViewModelµÄËõÐ´|
+|Prop µ¯³ö|
+
+
+# Instructions
+
+#### MVVMËµÃ÷
+1. MVVMÊÇModel-View-ViewModelµÄ¼òÐ´¡£MVVM ¾ÍÊÇ½«ÆäÖÐµÄView µÄ×´Ì¬ºÍÐÐÎª³éÏó»¯£¬ÈÃÎÒÃÇ½«ÊÓÍ¼ UI ºÍÒµÎñÂß¼­·Ö¿ª¡£
+2. MVVMÄ£Ê½³ä·ÖÀûÓÃÁËWPFµÄÊý¾Ý°ó¶¨»úÖÆ£¬×î´óÏÞ¶ÈµØ½µµÍÁËXmalÎÄ¼þºÍCSÎÄ¼þµÄñîºÏ¶È£¬Ò²¾ÍÊÇUIÏÔÊ¾ºÍÂß¼­´úÂëµÄñîºÏ¶È£¬ÈçÐèÒª¸ü»»½çÃæÊ±£¬Âß¼­´úÂëÐÞ¸ÄºÜÉÙ£¬ÉõÖÁ²»ÓÃÐÞ¸Ä¡£
+3. ÓëWinForm¿ª·¢Ïà±È£¬ÎÒÃÇÒ»°ãÔÚºóÖÃ´úÂëÖÐ»áÊ¹ÓÃ¿Ø¼þµÄÃû×ÖÀ´²Ù×÷¿Ø¼þµÄÊôÐÔÀ´¸üÐÂUI£¬¶øÔÚWPFÖÐÍ¨³£ÊÇÍ¨¹ýÊý¾Ý°ó¶¨À´¸üÐÂUI¡£
+4. ÔÚÏìÓ¦ÓÃ»§²Ù×÷ÉÏ£¬WinFormÊÇÍ¨¹ý¿Ø¼þµÄÊÂ¼þÀ´´¦Àí£¬¶øWPF¿ÉÒÔÊ¹ÓÃÃüÁî°ó¶¨µÄ·½Ê½À´´¦Àí£¬ñîºÏ¶È½«½µµÍ¡£
+
+### spt¹¦ÄÜËµÃ÷
+1. ÄÜ¹»´ò¿ª/¹Ø±Õ´®¿Ú
+2. °ÑÄÜ¹»Ê¹ÓÃµÄ´®¿ÚÈ«²¿¼ÓÈë´®¿ÚÁÐ±í
+3. ÄÜ¹»Ê¹ÓÃ´®¿Ú·¢ËÍÊý¾Ý(HEX/Text)£¬²¢ÄÜ¹»½Ó¿ÚÀ´×Ô´®¿ÚµÄÊý¾Ý
+4. ÄÜ¹»Í³¼Æ²¢ÏÔÊ¾·¢ËÍ/½ÓÊÕµÄÊý¾Ý×Ö½ÚÊý
+
+#### spt¿ò¼ÜËµÃ÷
+1. spt.toolÊÇ¹¤¾ßÀà£¬²»ÒÀÀµÈÎºÎÏîÄ¿¡£
+2. spt.mvvmÊÇmvvmÄ£Ê½µÄ»ùÀà£¬²»ÒÀÀµÈÎºÎÏîÄ¿¡£ºóÐøµÄViewModelÐèÒª¼Ì³Ð»òÊ¹ÓÃÄÚ²¿µÄÀà
+3. spt.modelÊÇsptÀïÃæµÄÊý¾ÝÄ£ÐÍ£¬²»ÒÀÀµÈÎºÎÏîÄ¿¡£
+4. spt.ui.shareÊÇÍ¨ÓÃµÄuiÑùÊ½¡£ÀýÈç£ºµ¯´°(ÌáÊ¾Ê½ºÍ¾¯¸æÊ½)¡£ËüÒÀÀµspt.toolºÍspt.mvvm
+5. spt.vmÊÇÏîÄ¿µÄViewModel£¬Ò»¸ö½çÃæ¶ÔÓ¦Ò»¸öViewModel¡£ËüÒÀÀµspt.tool¡¢spt.mvvm¡¢spt.model¡¢spt.ui.share
+6. spt.appÊÇÏîÄ¿Ö÷³ÌÐòUI£¬ÆäÖÐµÄÖ÷´°ÌåMainWindow°ó¶¨µÄViewModelÎªspt.vmÀïÃæµÄMainWindowVM¡£
+
+# Build & Package
+1. ÅäÖÃ¡£mvvmÄ£Ê½ÖÐÊ¹ÓÃÁË"System.Windows.Interactivity.dll"ÅäÖÃÎÄ¼þ£¬¿ÉÒÔ´Ó"Blend for Visual studio"Èí¼þÖÐ»ñÈ¡£»
+2. Éý¼¶°æ±¾¡£ÔÚspt.appµÄPropertiesÅäÖÃÎÄ¼þÖÐ£¬´ò¿ª³ÌÐò¼¯ÐÅÏ¢½øÐÐ°æ±¾µ÷Õû£»
+4. ±àÒë¡£ÔÚ**Release**ÏÂ±àÒë**ssm.app**£¬¼´¿ÉÍê³É°²×°°üµÄ´ò°ü¡£
+
+
+# Solution Structure
+
+|**Folder**|**Instructions**|
+|-|-|
+|\lib|¶¯Ì¬¿â£¬Ò»°ãÊÇ¿ÉÄÜÓÃµ½µÄÎÄ¼þ£¨ÔÝÎ´Ê¹ÓÃ£©|
+|\spt.app\bin| ³ÌÐò±àÒëÄ¿Â¼Î»ÖÃ
+
+
+# Commit Notice
+1. °æ±¾ºÅ¸ñÊ½Îª£º**x.x.x.x**£¬²âÊÔ°æ±¾ºó´øÉÏ **.alpha**£»µÚÒ»Î»ÎªÖ÷°æ±¾ºÅ£¬µÚ¶þÎ»Îª´Î°æ±¾ºÅ£¬µÚÈýÎ»Îª±ä¸ü°æ±¾ºÅ£¬µÚËÄÎ»ÎªÐÞ¶©°æ±¾ºÅ£»
+2. ÖØÒª°æ±¾ÐèÒª´òÉÏtag£¬²âÊÔÐÞ¶©°æ±¾²»Òª´òtag£»
+3. °²×°°üÃüÃû£º**spt_x.x.x.x.exe**£»
+
+
+#### °æ±¾ËµÃ÷£º
+1. *Base*£º´Ë°æ±¾±íÊ¾¸ÃÈí¼þ½ö½öÊÇÒ»¸ö¼ÙÒ³ÃæÁ´½Ó£¬Í¨³£°üÀ¨ËùÓÐµÄ¹¦ÄÜºÍÒ³Ãæ²¼¾Ö£¬µ«ÊÇÒ³ÃæÖÐµÄ¹¦ÄÜ¶¼Ã»ÓÐ×öÍêÕûµÄÊµÏÖ£¬Ö»ÊÇ×öÎªÕûÌåÍøÕ¾µÄÒ»¸ö»ù´¡¼Ü¹¹¡£
+2. *Alpha*£ºÈí¼þµÄ³õ¼¶°æ±¾£¬±íÊ¾¸ÃÈí¼þÔÚ´Ë½×¶ÎÒÔÊµÏÖÈí¼þ¹¦ÄÜÎªÖ÷£¬Í¨³£Ö»ÔÚÈí¼þ¿ª·¢ÕßÄÚ²¿½»Á÷£¬Ò»°ã¶øÑÔ£¬¸Ã°æ±¾Èí¼þµÄBug½Ï¶à£¬ÐèÒª¼ÌÐøÐÞ¸Ä£¬ÊÇ²âÊÔ°æ±¾¡£²âÊÔÈËÔ±Ìá½»Bug¾­¿ª·¢ÈËÔ±ÐÞ¸ÄÈ·ÈÏÖ®ºó£¬·¢²¼µ½²âÊÔÍøÖ·ÈÃ²âÊÔÈËÔ±²âÊÔ£¬´ËÊ±¿É½«Èí¼þ°æ±¾±ê×¢Îªalpha°æ¡£
+3. *Beta*£º¸Ã°æ±¾Ïà¶ÔÓÚAlpha°æÒÑ¾­ÓÐÁËºÜ´óµÄ½ø²½£¬Ïû³ýÁËÑÏÖØ´íÎó£¬µ«»¹ÐèÒª¾­¹ý¶à´Î²âÊÔÀ´½øÒ»²½Ïû³ý£¬´Ë°æ±¾Ö÷ÒªµÄÐÞ¸Ä¶ÔÏóÊÇÈí¼þµÄUI¡£ÐÞ¸ÄµÄµÄBug ¾­²âÊÔÈËÔ±²âÊÔÈ·ÈÏºó¿É·¢²¼µ½ÍâÍøÉÏ£¬´ËÊ±¿É½«Èí¼þ°æ±¾±ê×¢Îª beta°æ¡£
+4. *RC*£º¸Ã°æ±¾ÒÑ¾­Ïàµ±³ÉÊìÁË£¬»ù±¾ÉÏ²»´æÔÚµ¼ÖÂ´íÎóµÄBug£¬Óë¼´½«·¢ÐÐµÄÕýÊ½°æ±¾Ïà²îÎÞ¼¸¡£
+5. *Release*£º¸Ã°æ±¾ÒâÎ¶¡°×îÖÕ°æ±¾¡±£¬ÔÚÇ°Ãæ°æ±¾µÄÒ»ÏµÁÐ²âÊÔ°æÖ®ºó£¬ÖÕ¹é»áÓÐÒ»¸öÕýÊ½µÄ°æ±¾£¬ÊÇ×îÖÕ½»¸¶ÓÃ»§Ê¹ÓÃµÄÒ»¸ö°æ±¾¡£¸Ã°æ±¾ÓÐÊ±Ò²³Æ±ê×¼°æ¡£
