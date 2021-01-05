@@ -78,7 +78,7 @@ namespace spt.ui.share.PropWindow
         public ICommand CloseCommand { get; set; }
         private void ExcuteCloseCommand(object args)
         {
-            var btn = (args as RoutedEventArgs).OriginalSource as Button;
+            var btn = args as Button;
             var win = VisualTreeUtil.GetParentWindow<Window>(btn);
             if (btn.Content.ToString() == ButtonOkText)
             {

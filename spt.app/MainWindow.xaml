@@ -28,17 +28,18 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <Image Grid.Column="0" Source="Images/serialport.png" Stretch="Fill"/>
-                <Image Grid.Column="2" Source="Images/close.png" Margin="0" Stretch="Fill">
+                <Image x:Name="imgClose" Grid.Column="2" Source="Images/close.png" Margin="0" Stretch="Fill">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Loaded">
-                            <event:EventCommand Command="{Binding  Path=LoadCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding LoadCommand}" CommandParameter="{Binding ElementName=imgClose}"/>
                         </i:EventTrigger>
                         <i:EventTrigger EventName="MouseDown">
-                            <event:EventCommand Command="{Binding  Path=CloseCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding CloseCommand}" CommandParameter="{Binding ElementName=imgClose}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    
                 </Image>
+
+
             </Grid>
 
             <!--主界面-->
@@ -83,13 +84,7 @@
                                 </UniformGrid>
                             </Grid>
                             <!--打开串口-->
-                            <Button Grid.Row="1" Margin="5" FontSize="24" Content="打开端口">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <event:EventCommand Command="{Binding Path=OpenCommand}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Button>
+                            <Button x:Name="btnOpen" Grid.Row="1" Margin="5" FontSize="24" Content="打开端口" Command="{Binding Path=OpenCommand}" CommandParameter="{Binding ElementName=btnOpen}"/>
                         </Grid>
                     </GroupBox>
 
@@ -97,7 +92,7 @@
                     <GroupBox Grid.Row="1" Header="接受区属性" Margin="5" FontSize="16">
                         <UniformGrid Columns="2" Margin="5">
                             <CheckBox Content="16进制" FontSize="20" VerticalAlignment="Center" IsChecked="{Binding Path=ReceiveModel}"/>
-                            <Button Content="清空" FontSize="24" Margin="5" Command="{Binding Path=ClearReceiveCommand}"/>
+                            <Button x:Name="btnReciveClear" Content="清空" FontSize="24" Margin="5" Command="{Binding Path=ClearReceiveCommand}" CommandParameter="{Binding ElementName=btnReciveClear}"/>
                         </UniformGrid>
                     </GroupBox>
 
@@ -105,7 +100,7 @@
                     <GroupBox Grid.Row="2" Header="发送区属性" Margin="5" FontSize="16">
                         <UniformGrid Columns="2" Margin="5">
                             <CheckBox Content="16进制" FontSize="20" VerticalAlignment="Center" IsChecked="{Binding Path=SendModel}"/>
-                            <Button Content="清空" FontSize="24" Margin="5" Command="{Binding Path=ClearSendCommand}"/>
+                            <Button x:Name="btnSendClear" Content="清空" FontSize="24" Margin="5" Command="{Binding Path=ClearSendCommand}" CommandParameter="{Binding ElementName=btnSendClear}"/>
                         </UniformGrid>
                     </GroupBox>
 
@@ -115,12 +110,12 @@
                         <TextBlock Text="{Binding Path=SendByteCount}" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Text="接受:" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Text="{Binding Path=ReceiveByteCount}" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBlock FontSize="22" VerticalAlignment="Center" Text="清  零" FontWeight="Bold">
-                             <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseDown">
-                                        <event:EventCommand Command="{Binding Path=ClearByteCountCommand}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                        <TextBlock x:Name="txtClear" FontSize="22" VerticalAlignment="Center" Text="清  零" FontWeight="Bold">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding ClearByteCountCommand}" CommandParameter="{Binding ElementName=txtClear}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </TextBlock>
                     </UniformGrid>
                 </Grid>
@@ -141,7 +136,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="接受区" TextAlignment="Left" FontSize="18" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="0,-1,0,343" Grid.RowSpan="2"/>
-                        <TextBox Grid.Row="1" Text="{Binding Path=ReceiveText}" FontSize="18" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="txtReceive" Grid.Row="1" Text="{Binding Path=ReceiveText}" FontSize="18" Grid.ColumnSpan="2" VerticalScrollBarVisibility="Auto" TextChanged="TxtReceive_OnTextChanged" />
                     </Grid>
 
                     <!--发送区显示 & 发送按钮-->
@@ -152,17 +147,11 @@
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" Text="发送区" TextAlignment="Left" FontSize="18" VerticalAlignment="Center"/>
-                        <TextBox x:Name="txtSend" Grid.Row="1" Text="{Binding Path=SendText}" FontSize="18"/>
+                        <TextBox x:Name="txtSend" Grid.Row="1" Text="{Binding Path=SendText}" FontSize="18" VerticalScrollBarVisibility="Auto"/>
                         <UniformGrid Grid.Row="2" Columns="3" Margin="0,5,0,0">
-                            <Button Content=" 发送数据" FontSize="20" Margin="0,0,5,0" Command="{Binding Path=SendCommand}" IsEnabled="{Binding Path=IsOpen}"/>
-                            <Button Content=" 自动发送" FontSize="20" Margin="0,0,5,0" IsEnabled="{Binding Path=IsOpen}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <event:EventCommand Command="{Binding Path=AutoSendCommand}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Button>
-                            <UniformGrid Columns="2">
+                            <Button x:Name="btnSend" Content=" 发送数据" FontSize="20" Margin="0,0,5,0" Command="{Binding Path=SendCommand}" IsEnabled="{Binding Path=IsOpen}" CommandParameter="{Binding ElementName=btnSend}"/>
+                            <Button x:Name="btnAutoSend" Content="自动发送" FontSize="20" Margin="0,0,5,0" IsEnabled="{Binding Path=IsOpen}" Command="{Binding Path=AutoSendCommand}" CommandParameter="{Binding ElementName=btnAutoSend}"/>
+                                <UniformGrid Columns="2">
                                 <TextBlock Text="周期(ms)" FontSize="20" Margin="0,0,-10,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                                 <TextBox Text="{Binding Path=CycleTime}" FontSize="20" Margin="15,0,5,0" VerticalAlignment="Center"/>
                             </UniformGrid>

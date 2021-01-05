@@ -34,5 +34,8 @@ namespace spt.ui.share
             //点击窗体的“确定”按钮，则窗体的DataContext==true
             return bwin && (bool)win.DataContext;
         }
+
+
+
     }
 }

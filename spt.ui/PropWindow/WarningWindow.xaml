@@ -24,10 +24,10 @@
                 <TextBlock Margin="5" Text="{Binding Path=MessageTitle}" Foreground="DarkBlue" Background="#20B2AA" TextAlignment="Center" VerticalAlignment="Center" FontSize="28"/>
             </Grid>
             <TextBlock Grid.Row="1"  Text="{Binding Path=MessageText}" TextWrapping="Wrap" Foreground="Black" TextAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
-            <Button Margin="20,0,20,0" Grid.Row="2" Content="{Binding Path=ButtonWarnningText}" FontSize="22">
+            <Button x:Name="btnWarnning" Margin="20,0,20,0" Grid.Row="2" Content="{Binding Path=ButtonWarnningText}" FontSize="22">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <event:EventCommand Command="{Binding Path=CloseCommand}"/>
+                        <i:InvokeCommandAction Command="{Binding Path=CloseCommand}" CommandParameter="{Binding ElementName=btnWarnning}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>

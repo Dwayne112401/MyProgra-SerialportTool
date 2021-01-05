@@ -8,3 +8,4 @@ D:\@dwayne\@MyProcess\串口助手\spt\spt.tool\bin\Debug\spt.tool.pdb
 D:\@dwayne\@MyProcess\串口助手\spt\spt.tool\obj\Debug\spt.tool.csproj.CoreCompileInputs.cache
 D:\@dwayne\@MyProcess\串口助手\spt\spt.tool\obj\Debug\spt.tool.dll
 D:\@dwayne\@MyProcess\串口助手\spt\spt.tool\obj\Debug\spt.tool.pdb
+D:\@dwayne\@MyProcess\串口助手\spt\spt.tool\obj\Debug\spt.tool.csprojAssemblyReference.cache

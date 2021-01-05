@@ -7,6 +7,8 @@ using spt.ui.share.PropWindow;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +20,8 @@ namespace spt.vm
     {
         private SerialportParameterList _serialportParameter;
         private CurrentSerialportParamter _currentSerialportParamter;
-        private MySerialport mySerialport;
+        private CancellationTokenSource _autoSendTokenSource;
+        private readonly SerialPortUtil com;
         private string _sendText="";
         private string _receiveText="";
         private int _cycleTime=0;
@@ -64,7 +67,7 @@ namespace spt.vm
         private void  ReceiveTextDelegate(string text)
         {
             ReceiveText+= text;
-            ReceiveByteCount = mySerialport.ReceiveByteCount;
+            ReceiveByteCount = com.ReceiveCount;
         }
 
         /// <summary>
@@ -74,18 +77,18 @@ namespace spt.vm
         {
             get
             {
-                return mySerialport.SendModel==MySerialport.DataModel.Hex?true:false;
+                return com.SendType==SerialPortUtil.DataType.Hex?true:false;
             }
             set
             {
                 if (value == true)
                 {
-                    mySerialport.SendModel = MySerialport.DataModel.Hex;
+                    com.SendType = SerialPortUtil.DataType.Hex;
                     SendText = ScaleUtil.TextToHex(SendText);
                 }
                 else
                 {
-                    mySerialport.SendModel = MySerialport.DataModel.Text;
+                    com.SendType = SerialPortUtil.DataType.Text;
                     SendText = ScaleUtil.HexToText(SendText);
                 }
                 OnPropertyChanged();
@@ -99,18 +102,18 @@ namespace spt.vm
         {
             get
             {
-                return mySerialport.RecieveModel == MySerialport.DataModel.Hex ? true : false;
+                return com.RecieveType == SerialPortUtil.DataType.Hex ? true : false;
             }
             set
             {
                 if (value == true)
                 {
-                    mySerialport.RecieveModel = MySerialport.DataModel.Hex;
+                    com.RecieveType = SerialPortUtil.DataType.Hex;
                     ReceiveText = ScaleUtil.TextToHex(ReceiveText);
                 }
                 else
                 {
-                    mySerialport.RecieveModel = MySerialport.DataModel.Text;
+                    com.RecieveType = SerialPortUtil.DataType.Text;
                     ReceiveText = ScaleUtil.HexToText(ReceiveText);
                 }
                 OnPropertyChanged();
@@ -122,7 +125,7 @@ namespace spt.vm
         /// </summary>
         public long SendByteCount
         {
-            get => mySerialport.SendByteCount;
+            get => com.SendCount;
             set => OnPropertyChanged();
         }
 
@@ -131,7 +134,7 @@ namespace spt.vm
         /// </summary>
         public long ReceiveByteCount
         {
-            get => mySerialport.ReceiveByteCount;
+            get => com.ReceiveCount;
             set => OnPropertyChanged();
         }
 
@@ -153,7 +156,7 @@ namespace spt.vm
         /// </summary>
         public bool IsOpen
         {
-            get => mySerialport.IsOpen;
+            get => com.IsOpen;
             set => OnPropertyChanged();
         }
         #endregion
@@ -167,10 +170,10 @@ namespace spt.vm
         {
             try
             {
-                var btn = (args as RoutedEventArgs).OriginalSource as Button;
+                var btn = args as Button;
                 if (btn.Content.ToString() == "打开端口")
                 {
-                    mySerialport.Open(CurrentSerialportParamter.PortName,
+                    com.OpenCom(CurrentSerialportParamter.PortName,
                                       CurrentSerialportParamter.BaudRate,
                                       CurrentSerialportParamter.DataBits,
                                       CurrentSerialportParamter.Parity,
@@ -181,12 +184,12 @@ namespace spt.vm
                 }
                 else
                 {
-                    mySerialport.Close();
+                    com.Close();
                     btn.Content = "打开端口";
                 }
 
                 //打开发送按钮
-                IsOpen = mySerialport.IsOpen;
+                IsOpen = com.IsOpen;
             }
             catch (Exception ex)
             {
@@ -215,7 +218,8 @@ namespace spt.vm
         public ICommand SendCommand { get; set; }
         private void ExcuteSendCommand(object args)
         {
-            mySerialport.Send(SendText);
+            com.Send(SendText);
+            SendByteCount = com.SendCount;
         }
         private bool CancelSendComand(object args)
         {
@@ -226,21 +230,21 @@ namespace spt.vm
         /// 自动发送
         /// </summary>
         public ICommand AutoSendCommand { get; set; }
-        private bool IsAutoSend = false;
+      
         public async  void ExcuteAutoSendCommand(object args)
         {
-            var btn = (args as RoutedEventArgs).OriginalSource as Button;
-            IsAutoSend = !IsAutoSend;
-            btn.Content = IsAutoSend ? "停止发送" : "自动发送";
-            await Task.Run(() =>
+            var btn = args as Button;
+            _autoSendTokenSource = new CancellationTokenSource();
+            if (btn.Content.ToString() == "自动发送")
             {
-                while (IsAutoSend==true)
-                {
-                    mySerialport.Send(SendText);
-                    SendByteCount = mySerialport.SendByteCount;
-                    System.Threading.Thread.Sleep(CycleTime);
-                }
-            });
+                StartAutoSend();
+                btn.Content = "停止发送";
+            }
+            else
+            {
+                _autoSendTokenSource.Cancel();
+                btn.Content = "自动发送";
+            }
         }
 
         /// <summary>
@@ -267,8 +271,9 @@ namespace spt.vm
         public ICommand ClearByteCountCommand { get; set; }
         private void ExcuteClearByteCount(object args)
         {
-            SendByteCount =mySerialport.SendByteCount= 0;
-            ReceiveByteCount =mySerialport.ReceiveByteCount= 0;
+            com.ClearCount();
+            SendByteCount = com.SendCount;
+            ReceiveByteCount = com.ReceiveCount;
         }
 
         /// <summary>
@@ -297,7 +302,7 @@ namespace spt.vm
         public ICommand LoadCommand { get; set; }
         private void ExcuteLoadCommand(object args)
         {
-            var img = (args as RoutedEventArgs).OriginalSource as Image;
+            var img = args as Image;
             window = VisualTreeUtil.GetParentWindow<Window>(img);
         }
         #endregion
@@ -307,8 +312,9 @@ namespace spt.vm
 
         public MainWindowVM()
         {
+           
             //串口操作对象
-            mySerialport = new MySerialport();
+            com = new SerialPortUtil();
 
             //预加载参数
             var partityList = new List<Parity>();
@@ -323,7 +329,7 @@ namespace spt.vm
             }
             _serialportParameter = new SerialportParameterList()
             {
-                PortNameList = new List<string>(mySerialport.PortNameList),
+                PortNameList = new List<string>(SerialPortUtil.GetPortNames()),
                 BaudRateList = new List<int>()
                 {
                     600, 1200, 2400, 4800, 9600,
@@ -348,8 +354,8 @@ namespace spt.vm
                 StopBits = _serialportParameter.StopBitsList[1],
             };
 
-            //启动接受数据线程
-            mySerialport.ReceiveAsync(ReceiveTextDelegate);
+            //启动接受
+            StartReceive();
 
             //初始化字段
             SendText = "";
@@ -381,5 +387,40 @@ namespace spt.vm
             ClearByteCountCommand = new RelayCommand(ExcuteClearByteCount, null);
         }
         #endregion
+
+        private void StartReceive()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    var buffer = com.TryMessage();
+                    if (buffer == null) continue;
+
+                    if (com.RecieveType == SerialPortUtil.DataType.Text)
+                    {
+                        ReceiveText += com.Encoding.GetString(buffer);
+                    }
+                    else
+                    {
+                        ReceiveText += string.Join(" ", buffer);
+                    }
+                    ReceiveByteCount = com.ReceiveCount;
+                }
+            }, TaskCreationOptions.LongRunning);
+        }
+
+        private void StartAutoSend()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                while (_autoSendTokenSource.Token.IsCancellationRequested==false)
+                {
+                    com.Send(SendText);
+                    SendByteCount = com.SendCount;
+                    System.Threading.Thread.Sleep(CycleTime);
+                }
+            }, _autoSendTokenSource.Token);
+        }
     }
 }

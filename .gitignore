@@ -8,7 +8,8 @@ Debug/
 ###################################################
 
 ###################################################
-/spt.app/obj/Debug/*
-/spt.ui/obj/Debug/*
-/spt.vm/obj/Debug/*
+/spt.app/obj/Debug/
+/spt.app/obj/Debug/TempPE/
+/spt.ui/obj/Debug/
+/spt.vm/obj/Debug/
 ###################################################

@@ -32,17 +32,17 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
-                <Button  Grid.Column="1" Content="{Binding Path=ButtonOkText}" FontSize="22">
+                <Button x:Name="btnOk" Grid.Column="1" Content="{Binding Path=ButtonOkText}" FontSize="22">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <event:EventCommand Command="{Binding Path=CloseCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Path=CloseCommand}" CommandParameter="{Binding ElementName=btnOk}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button  Grid.Column="3" Content="{Binding Path=ButtonCancelText}" FontSize="22">
+                <Button x:Name="btnCancel" Grid.Column="3" Content="{Binding Path=ButtonCancelText}" FontSize="22">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <event:EventCommand Command="{Binding Path=CloseCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Path=CloseCommand}" CommandParameter="{Binding ElementName=btnCancel}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>

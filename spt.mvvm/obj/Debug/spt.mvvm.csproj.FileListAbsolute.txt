@@ -7,7 +7,9 @@ D:\@dwayne\@MyProcess\串口助手\SerialportTool\SerialportTool\mvvm\obj\Debug\
 D:\@dwayne\@MyProcess\串口助手\SerialportTool\SerialportTool\mvvm\obj\Debug\spt.mvvm.pdb
 D:\@dwayne\@MyProcess\串口助手\spt\spt.mvvm\bin\Debug\spt.mvvm.dll
 D:\@dwayne\@MyProcess\串口助手\spt\spt.mvvm\bin\Debug\spt.mvvm.pdb
+D:\@dwayne\@MyProcess\串口助手\spt\spt.mvvm\bin\Debug\System.Windows.Interactivity.dll
 D:\@dwayne\@MyProcess\串口助手\spt\spt.mvvm\obj\Debug\spt.mvvm.csproj.CoreCompileInputs.cache
 D:\@dwayne\@MyProcess\串口助手\spt\spt.mvvm\obj\Debug\spt.mvvm.csproj.CopyComplete
 D:\@dwayne\@MyProcess\串口助手\spt\spt.mvvm\obj\Debug\spt.mvvm.dll
 D:\@dwayne\@MyProcess\串口助手\spt\spt.mvvm\obj\Debug\spt.mvvm.pdb
+D:\@dwayne\@MyProcess\串口助手\spt\spt.mvvm\obj\Debug\spt.mvvm.csprojAssemblyReference.cache

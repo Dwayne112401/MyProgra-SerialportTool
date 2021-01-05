@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace SerialportTool
@@ -11,6 +12,7 @@ namespace SerialportTool
         public MainWindow()
         {
             InitializeComponent();
+           
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
@@ -19,6 +21,11 @@ namespace SerialportTool
             {
                 this.DragMove();
             }
+        }
+
+        private void TxtReceive_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtReceive.ScrollToEnd();
         }
     }
 }
